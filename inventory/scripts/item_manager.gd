@@ -12,3 +12,5 @@ func _on_item_used(id: String, qty: int) -> void:
 		medkit_used()
 	
 	print(id)
+	
+@export var availableInventories: Array[Node] = []

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://tb68lqtvfbbk"]
+[gd_scene load_steps=3 format=3 uid="uid://tb68lqtvfbbk"]
 
 [ext_resource type="Texture2D" uid="uid://n7rcfk6jojsp" path="res://assets/UI/Inventory/gird_cell.png" id="1_clqgn"]
+[ext_resource type="Script" path="res://inventory/scripts/grid_base.gd" id="2_sdcmb"]
 
 [node name="GridBase" type="TextureRect"]
 texture_filter = 1
@@ -8,3 +9,4 @@ offset_right = 32.0
 offset_bottom = 32.0
 texture = ExtResource("1_clqgn")
 stretch_mode = 1
+script = ExtResource("2_sdcmb")

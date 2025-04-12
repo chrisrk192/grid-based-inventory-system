@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Grid based inventory system"
 config/tags=PackedStringArray("mini_project")
-run/main_scene="res://inventory/control.tscn"
+run/main_scene="res://test_scene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

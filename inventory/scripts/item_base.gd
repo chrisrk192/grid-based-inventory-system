@@ -5,7 +5,7 @@ class_name Item extends TextureRect
 @export var countLabel: Label
 @export var shadow: ColorRect 
 
-@onready var grid_map: Inventory = get_parent()
+var grid_map: Inventory  # Changed from @onready to variable to allow changing the reference
 
 var cur_size: Vector2 = Vector2.ZERO
 var is_rotated: bool = false
@@ -18,19 +18,21 @@ const OCCUPIED_SPOT: Color = Color(1, 0, 0, 0.3) # the color of occupied areas
 const SWITCH_SPOT: Color = Color(1, 0.68, 0, 0.3) # thr color when the area is occupied by other items
 #----------------------------------------------------------#
 func _ready() -> void:
+	grid_map = get_parent() as Inventory  # Set initial grid reference
 	countLabel.visible = false
 	# making sure the signal isn't connected to stop godot from bitching
 	if not ItemManager.is_connected("item_used", Callable(ItemManager, "_on_item_used")):
 		ItemManager.connect("item_used", Callable(ItemManager, "_on_item_used"))
 
 func _process(_delta: float) -> void:
-	var zone: Rect2 = Rect2(grid_map.hover_rect.global_position, size)
-	if grid_map.is_inside_rect(zone):
-		shadow.global_position = grid_map.hover_rect.global_position
+	if grid_map != null:
+		var zone: Rect2 = Rect2(grid_map.hover_rect.global_position, size)
+		if grid_map.is_inside_rect(zone):
+			shadow.global_position = grid_map.hover_rect.global_position
 	
 	if stackable:
 		countLabel.text = "X" + str(quantity)
-	shadow.visible = grid_map.item_held == self
+	shadow.visible = grid_map != null and grid_map.item_held == self
 
 func prep_item(itemId: String = "") -> void:
 	var item_property: Dictionary = ItemsDB.get_item(itemId) # get the item id from teh autoload and use it's data to configure teh item

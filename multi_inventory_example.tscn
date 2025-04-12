@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkeice5456txi"]
+
+[ext_resource type="Script" path="res://multi_inventory_example.gd" id="1_fgjnw"]
+[ext_resource type="PackedScene" uid="uid://tb68lqtvfbbk" path="res://inventory/grid_base.tscn" id="2_xrnlk"]
+
+[node name="MultiInventoryExample" type="Node2D"]
+script = ExtResource("1_fgjnw")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 97.0
+offset_top = 70.0
+offset_right = 242.0
+offset_bottom = 96.0
+text = "Player Inventory"
+
+[node name="ChestInventory" parent="." instance=ExtResource("2_xrnlk")]
+offset_left = 500.0
+offset_top = 100.0
+offset_right = 756.0
+offset_bottom = 356.0
+
+[node name="PlayerInventory" parent="." instance=ExtResource("2_xrnlk")]
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 356.0
+offset_bottom = 356.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 497.0
+offset_top = 70.0
+offset_right = 642.0
+offset_bottom = 96.0
+text = "Chest Inventory"
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 100.0
+offset_top = 40.0
+offset_right = 756.0
+offset_bottom = 66.0
+text = "Drag items between the two inventory grids to transfer them"
+horizontal_alignment = 1
