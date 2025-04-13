@@ -13,4 +13,10 @@ func _on_item_used(id: String, qty: int) -> void:
 	
 	print(id)
 	
-@export var availableInventories: Array[Node] = []
+var _availableInventories: Array[Node] = []
+
+func register_available_inventory(inv: Inventory) -> void:
+	_availableInventories.append(inv)
+
+func get_available_inventories() -> Array[Node]:
+	return _availableInventories.duplicate()

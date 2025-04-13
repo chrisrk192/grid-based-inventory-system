@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://dcopearvr1hyh"]
+
+[ext_resource type="Script" path="res://inventory/scripts/item.gd" id="1_o3hwc"]
+[ext_resource type="Texture2D" uid="uid://r4ijrs5vvmcc" path="res://assets/UI/Inventory/test/icon_ammo_boolets.png" id="1_ostqt"]
+
+[resource]
+script = ExtResource("1_o3hwc")
+item_id = 0
+name = "Boolets"
+stackble = true
+icon = ExtResource("1_ostqt")
+color = Color(0.772549, 0.572549, 0.117647, 1)
+value = 15
+grid_shape = Array[Vector2i]([Vector2i(0, 0)])

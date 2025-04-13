@@ -13,7 +13,7 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t02w0"]
 
-[node name="ItemIcon" type="TextureRect" node_paths=PackedStringArray("actionList", "grid_space", "countLabel", "shadow")]
+[node name="ItemIcon" type="TextureRect" node_paths=PackedStringArray("actionList", "countLabel")]
 z_index = 1
 offset_right = 40.0
 offset_bottom = 40.0
@@ -22,9 +22,7 @@ texture = ExtResource("2_cak5d")
 expand_mode = 1
 script = ExtResource("1_tsbf5")
 actionList = NodePath("MenuButton")
-grid_space = NodePath("grid_space")
 countLabel = NodePath("Item_Count")
-shadow = NodePath("shadow")
 
 [node name="MenuButton" type="MenuButton" parent="."]
 layout_mode = 0
@@ -43,20 +41,3 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "X 19"
-
-[node name="grid_space" type="ColorRect" parent="."]
-show_behind_parent = true
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0.262745)
-
-[node name="shadow" type="ColorRect" parent="."]
-show_behind_parent = true
-top_level = true
-layout_mode = 0
-offset_right = 5.0
-offset_bottom = 5.0
-mouse_filter = 2
-color = Color(1, 0.683333, 0, 0.301961)

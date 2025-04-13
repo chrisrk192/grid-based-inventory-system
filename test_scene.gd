@@ -8,12 +8,9 @@ func _ready() -> void:
 	_prep_itemList()
 
 func _process(_delta: float) -> void:
-	debugger_lebel.text = str(Grid_node.item_held) #NOTE: this is for debugging only remove it
-	
-	if Input.is_action_just_pressed("rotate") and Grid_node.item_held == null:
-		get_tree().reload_current_scene()
+	debugger_lebel.text = str(Grid_node.item_held)
 
-#NOTE: remove this shit later
+#NOTE: remove this later
 @onready var debugger_lebel: Label = $"CanvasLayer/debug pannel/VBoxContainer/PrintLabel"
 @onready var quantit: LineEdit = $"CanvasLayer/debug pannel/VBoxContainer/quantity"
 func _on_debug_button_pressed() -> void:
