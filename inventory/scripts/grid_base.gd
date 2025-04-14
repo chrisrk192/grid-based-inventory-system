@@ -66,8 +66,12 @@ func _physics_process(_delta: float) -> void:
 	if item_held != null:
 		item_held.global_position = mouse_pos + offset
 		
+		
+		
 		# Get the current inventory grid the mouse is over
 		var current_grid = _get_grid_at_position(mouse_pos)
+		if(current_grid): 
+			print(item_held.global_position, " maps to ", current_grid.world_to_grid(item_held.global_position))
 		
 		#if current_grid != null and current_grid != item_held.grid_map:
 			#item_held.grid_map = current_grid
@@ -196,6 +200,7 @@ func all_cells_are_clear(cells: Array, exclude_items: Array = []) -> bool:
 		var grid_pos = world_to_grid(cell_pos)
 		
 		if grid_pos.x < 0 or grid_pos.x >= grid_width or grid_pos.y < 0 or grid_pos.y >= grid_height:
+			print("Outside of grid bounds")
 			return false
 	
 	# Check if any cells overlap with existing items
@@ -208,6 +213,7 @@ func all_cells_are_clear(cells: Array, exclude_items: Array = []) -> bool:
 			
 			for item_cell in item_cells:
 				if world_to_grid(cell_pos) == world_to_grid(item_cell):
+					print("Overlap on cell : ",world_to_grid(cell_pos), " at ", cell_pos)
 					return false
 	
 	return true
@@ -241,7 +247,7 @@ func save_items() -> void:
 	
 	for item: InventoryItem in get_items():
 		var save_data: Dictionary = {
-			"id": item.item_stats.item_id,
+			"id": item.item_stats.name,
 			"pos": item.position,
 			"qty": item.quantity,
 			"rotated": item.is_rotated,
@@ -277,7 +283,7 @@ func _get_item_at_mouse_pos() -> InventoryItem:
 			var mouse_cell_pos = ((mouse_pos - current_grid.global_position) - Vector2(current_grid.cell_size/2, current_grid.cell_size/2)).snappedf(current_grid.cell_size)
 
 			for cell_pos in occupied_cells:
-				print(cell_pos, " compared to ", mouse_cell_pos)
+				#print(cell_pos, " compared to ", mouse_cell_pos)
 				if cell_pos.distance_to(mouse_cell_pos + current_grid.global_position) < cell_size / 2:
 					return item
 	return null
@@ -294,6 +300,7 @@ func _grab() -> void:
 
 func _release() -> void:
 	if item_held == null:
+		print("Holding nothing")
 		return
 	
 	var target_grid = _get_grid_at_position(mouse_pos)
@@ -303,16 +310,18 @@ func _release() -> void:
 		item_held.global_position = item_last_position
 		item_last_position = Vector2i.ZERO
 		item_held = null
+		print("Target Grid is null, returning")
 		return
 	
 	# Handle transfer between inventories
 	if target_grid != self and item_held.get_parent() == self:
 		handle_transfer_to_other_grid(target_grid)
+		print("handled transfer to other grid")
 		return
 	
 	# Handle placement within the same inventory
 	var partial_cell_offset = Vector2(floori(target_grid.global_position.x) % target_grid.cell_size, floori(target_grid.global_position.y) % target_grid.cell_size)#hover_rect.global_position
-	var test_position = item_held.global_position.snappedf(target_grid.cell_size)# + partial_cell_offset
+	var test_position =  grid_to_world(world_to_grid(item_held.global_position))#item_held.global_position.snappedf(target_grid.cell_size) + partial_cell_offset
 	var occupied_cells = item_held.get_occupied_cells(test_position)
 	
 	# Check for stackable items
@@ -336,22 +345,28 @@ func _release() -> void:
 					item.quantity += item_held.quantity
 					item_held.queue_free()
 					item_held = null
+					print("Stacking Items")
 					return
 	
 	# Check if the placement area is clear
 	if all_cells_are_clear(occupied_cells, [item_held]):
-		item_held.global_position = test_position# + partial_cell_offset
+		print("all_cells_are_clear", item_held.global_position, 
+				" getting set to ", test_position, " aka cell: ", world_to_grid(item_held.global_position),
+				" to cell ", world_to_grid(test_position)
+				)
+		item_held.global_position = grid_to_world(world_to_grid(item_held.global_position))# test_position# + partial_cell_offset
 		offset = Vector2.ZERO
 		item_held = null
 	else:
 		item_held.global_position = item_last_position
 		offset = Vector2.ZERO
 		item_held = null
+		print("all_cells_are NOT clear:", occupied_cells )
 
 # Handle transferring an item to another inventory grid
 func handle_transfer_to_other_grid(target_grid: Inventory) -> void:
 	var partial_cell_offset = Vector2(floori(target_grid.global_position.x) % target_grid.cell_size, floori(target_grid.global_position.y) % target_grid.cell_size)#hover_rect.global_position
-	var test_position = item_held.global_position.snappedf(target_grid.cell_size) + partial_cell_offset
+	var test_position = grid_to_world(world_to_grid(item_held.global_position)) #item_held.global_position.snappedf(target_grid.cell_size) + partial_cell_offset
 	var occupied_cells = item_held.get_occupied_cells(test_position)
 	
 	# Check if the item is stackable and can be merged with an existing item

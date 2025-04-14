@@ -46,7 +46,9 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if grid_map != null and grid_map.item_held == self:
 		# Update shadow container position
-		shadow_container.global_position = self.global_position.snappedf(grid_map.cell_size)
+		shadow_container.global_position = grid_map.grid_to_world(grid_map.world_to_grid(
+			self.global_position
+		))
 	
 	if item_stats.stackable:
 		countLabel.text = "X" + str(quantity)

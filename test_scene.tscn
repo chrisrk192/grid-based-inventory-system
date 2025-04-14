@@ -13,7 +13,7 @@ shader = ExtResource("3_jskts")
 shader_parameter/grain_amount = 0.42
 shader_parameter/grain_size = 0.1
 shader_parameter/uv_scaling = 0.9
-shader_parameter/wave_strength = 0.7
+shader_parameter/wave_strength = 0.2
 shader_parameter/NOISE_TEXTURE = SubResource("NoiseTexture2D_j3ckx")
 
 [node name="Test_scene" type="Control" node_paths=PackedStringArray("Grid_node")]
@@ -27,7 +27,6 @@ script = ExtResource("1_dcr3e")
 Grid_node = NodePath("Inventory")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
-visible = false
 script = ExtResource("2_0ojgl")
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
@@ -43,6 +42,7 @@ mouse_filter = 2
 color = Color(0.439849, 0.285744, 0.744283, 0.462745)
 
 [node name="Inventory3" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 12.0
 offset_right = 52.0
 offset_bottom = 40.0
@@ -91,11 +91,13 @@ offset_bottom = 30.0
 text = "Grid"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/debug pannel"]
-layout_mode = 0
-offset_left = 2.0
-offset_top = 36.0
-offset_right = 198.0
-offset_bottom = 410.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 50.0
+offset_right = -5.0
+offset_bottom = 566.0
+grow_horizontal = 2
 theme_override_constants/separation = 15
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/debug pannel/VBoxContainer"]
@@ -166,6 +168,7 @@ layout_mode = 2
 text = "Load"
 
 [node name="view_btn" type="Button" parent="CanvasLayer/debug pannel/VBoxContainer/HBoxContainer3"]
+visible = false
 layout_mode = 2
 text = "View items"
 

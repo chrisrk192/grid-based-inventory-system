@@ -7,7 +7,7 @@
 script = ExtResource("1_o3hwc")
 item_id = 0
 name = "Boolets"
-stackble = true
+stackable = false
 icon = ExtResource("1_ostqt")
 color = Color(0.772549, 0.572549, 0.117647, 1)
 value = 15
